@@ -1,0 +1,14 @@
+//
+//  Tests-Prefix.h
+//
+//  Created by ToKoRo on 2013-12-21.
+//
+
+#import <Availability.h>
+
+#ifdef __OBJC__
+  #import <Foundation/Foundation.h>
+  #import <UIKit/UIKit.h>
+  #import <XCTest/XCTest.h>
+  #import "TKRGuard.h"
+#endif
