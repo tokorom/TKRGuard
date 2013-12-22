@@ -4,25 +4,40 @@
 //  Created by ToKoRo on 2013-12-13.
 //
 
+#import "TKRGuardStatus.h"
 
-#define TKRGUARD_KEY [TKRGuard adjustedKey:[NSString stringWithFormat:@"%s", __PRETTY_FUNCTION__]]
+#define TKRGUARD_KEY ([TKRGuard adjustedKey:[NSString stringWithFormat:@"%s", __PRETTY_FUNCTION__]])
 #define TKRGUARD_TIMEOUT XCTFail(@"TKRGuard timeouted")
+#define TKRAssertEqualStatus(v, e) TKRGuardStatus e_ ## __LINE__ = (e); \
+                                   TKRGuardStatus v_ ## __LINE__ = (v); \
+                                   e_ ## __LINE__ == v_ ## __LINE__ ? \
+                                   (void)nil : \
+                                   XCTFail(@"%@", [TKRGuard guideMessageWithExpected:e_ ## __LINE__  \
+                                                                                 got:v_ ## __LINE__])
 
-#if !defined(UNUSED_TKRGUARD_SHORTHAND)
+#if !defined(UNUSE_TKRGUARD_SHORTHAND)
 
-#define WAIT ([TKRGuard waitForKey:TKRGUARD_KEY]) ? (void)nil : TKRGUARD_TIMEOUT
-#define WAIT_MAX(t) ([TKRGuard waitWithTimeout:(t) forKey:TKRGUARD_KEY]) ? (void)nil : TKRGUARD_TIMEOUT
+#define WAIT (kTKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY]) ? \
+                        (void)nil : TKRGUARD_TIMEOUT
+#define WAIT_MAX(t) kTKRGuardStatusTimeouted != [TKRGuard waitWithTimeout:(t) forKey:TKRGUARD_KEY] ? \
+                        (void)nil : TKRGUARD_TIMEOUT
+#define WAIT_FOR(s) TKRAssertEqualStatus([TKRGuard waitForKey:TKRGUARD_KEY], (s))
+
 #define RESUME [TKRGuard resumeForKey:TKRGUARD_KEY]
+#define RESUME_WITH(s) [TKRGuard resumeWithStatus:(s) forKey:TKRGUARD_KEY]
 
 #endif
 
 @interface TKRGuard : NSObject
 
-+ (BOOL)waitForKey:(id)key;
-+ (BOOL)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key;
++ (TKRGuardStatus)waitForKey:(id)key;
++ (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key;
 
 + (void)resumeForKey:(id)key;
++ (void)resumeWithStatus:(TKRGuardStatus)status forKey:(id)key;
 
 + (id)adjustedKey:(id)key;
+
++ (NSString *)guideMessageWithExpected:(TKRGuardStatus)expected got:(TKRGuardStatus)got;
 
 @end

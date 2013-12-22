@@ -41,19 +41,24 @@ static TKRGuard *_sharedInstance = nil;
 #pragma mark - Public Interface
 //----------------------------------------------------------------------------//
     
-+ (BOOL)waitForKey:(id)key
++ (TKRGuardStatus)waitForKey:(id)key
 {
     return [self.class waitWithTimeout:kTKRGuardDefaultTimeout forKey:key];
 }
 
-+ (BOOL)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key
++ (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key
 {
     return [_sharedInstance waitAndAddTokenWithTimeout:timeout forKey:key];
 }
 
 + (void)resumeForKey:(id)key
 {
-    [_sharedInstance removeTokenForKey:key];
+    [_sharedInstance removeTokenForKey:key withStatus:kTKRGuardStatusAny];
+}
+
++ (void)resumeWithStatus:(TKRGuardStatus)status forKey:(id)key
+{
+    [_sharedInstance removeTokenForKey:key withStatus:status];
 }
 
 + (id)adjustedKey:(id)key
@@ -70,11 +75,18 @@ static TKRGuard *_sharedInstance = nil;
     return key;
 }
 
++ (NSString *)guideMessageWithExpected:(TKRGuardStatus)expected got:(TKRGuardStatus)got
+{
+    return [NSString stringWithFormat:@"expected: %@, got: %@",
+                                          [self.class stringForStatus:expected],
+                                          [self.class stringForStatus:got]];
+}
+
 //----------------------------------------------------------------------------//
 #pragma mark - Private Methods
 //----------------------------------------------------------------------------//
 
-- (BOOL)waitAndAddTokenWithTimeout:(NSTimeInterval)timeout forKey:(id)key
+- (TKRGuardStatus)waitAndAddTokenWithTimeout:(NSTimeInterval)timeout forKey:(id)key
 {
     @synchronized (self) {
         TKRGuardToken *token = [TKRGuardToken new];
@@ -83,12 +95,24 @@ static TKRGuard *_sharedInstance = nil;
     }
 }
 
-- (void)removeTokenForKey:(id)key
+- (void)removeTokenForKey:(id)key withStatus:(TKRGuardStatus)status
 {
     @synchronized (self) {
         TKRGuardToken *token = [self.tokens objectForKey:key];
-        [token resume];
+        [token resumeWithStatus:status];
         [self.tokens removeObjectForKey:key];
+    }
+}
+
++ (NSString *)stringForStatus:(TKRGuardStatus)status
+{
+    switch (status) {
+        case kTKRGuardStatusAny:        return @"kTKRGuardStatusAny";
+        case kTKRGuardStatusSuccess:    return @"kTKRGuardStatusSuccess";
+        case kTKRGuardStatusFailure:    return @"kTKRGuardStatusFailure";
+        case kTKRGuardStatusTimeouted:  return @"kTKRGuardStatusTimeouted";
+        case kTKRGuardStatusNil:        return @"kTKRGuardStatusNil";
+        default:                        return @"Undefined";
     }
 }
 

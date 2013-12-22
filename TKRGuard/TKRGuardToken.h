@@ -4,9 +4,11 @@
 //  Created by ToKoRo on 2013-12-13.
 //
 
+#import "TKRGuardStatus.h"
+
 @interface TKRGuardToken : NSObject
 
-- (BOOL)waitWithTimeout:(NSTimeInterval)timeout;
-- (void)resume;
+- (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout;
+- (void)resumeWithStatus:(TKRGuardStatus)status;
 
 @end

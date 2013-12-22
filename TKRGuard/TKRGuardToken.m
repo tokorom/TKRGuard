@@ -9,7 +9,7 @@
 static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 
 @interface TKRGuardToken ()
-@property (assign, getter=isWaiting) BOOL waiting;
+@property (assign) TKRGuardStatus resultStatus;
 @end 
 
 @implementation TKRGuardToken
@@ -18,10 +18,10 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 #pragma mark - Lifecycle
 //----------------------------------------------------------------------------//
 
-- (id)init
+- (instancetype)init
 {
     if ((self = [super init])) {
-        self.waiting = YES;
+        self.resultStatus = kTKRGuardStatusNil;
     }
     return self;
 }
@@ -30,22 +30,31 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 #pragma mark - Public Interface
 //----------------------------------------------------------------------------//
     
-- (BOOL)waitWithTimeout:(NSTimeInterval)timeout
+- (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout
 {
     NSDate *expiryDate = [NSDate dateWithTimeIntervalSinceNow:timeout];
     while (self.isWaiting) {
         if (NSOrderedDescending == [[NSDate date] compare:expiryDate]) {
-            return NO;
+            return kTKRGuardStatusTimeouted;
         }
         NSDate *untilDate = [NSDate dateWithTimeIntervalSinceNow:kTKRGuardTokenLoopInterval];
         [[NSRunLoop currentRunLoop] runUntilDate:untilDate];
     }
-    return YES;
+    return self.resultStatus;
 }
 
-- (void)resume
+- (void)resumeWithStatus:(TKRGuardStatus)status
 {
-    self.waiting = NO;
+    self.resultStatus = status;
+}
+
+//----------------------------------------------------------------------------//
+#pragma mark - Private Methods
+//----------------------------------------------------------------------------//
+
+- (BOOL)isWaiting
+{
+    return kTKRGuardStatusNil == self.resultStatus;
 }
 
 @end

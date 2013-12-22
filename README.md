@@ -21,6 +21,43 @@ All you need to use only `WAIT` and `RESUME`.
 }
 ```
 
+## Advanced Examples
+
+When you want to notify a status (like a GHUnit).
+
+```
+- (void)testExample
+{
+    [self requestGetAsyncronous:^(id res, NSError *error) {
+        if (error) {
+            RESUME_WITH(kTKRGuardStatusFailure);
+        } else {
+            RESUME_WITH(kTKRGuardStatusSuccess);
+        }
+    }];
+
+    WAIT_FOR(kTKRGuardStatusSuccess);
+}
+```
+
+When you do not want to use the shorthand macro.
+
+```
+#define UNUSE_TKRGUARD_SHORTHAND
+
+- (void)testExample
+{
+    __block id result = nil;
+    [self requestGetAsyncronous:^(id res, NSError *error) {
+        result = res;
+        [TKRGuard resumeForKey:@"xxx"];
+    }];
+
+    [TKRGuard waitWithTimeout:1.0 forKey:@"xxx"];
+    XCTAssertEqualObjects(response, @“OK!”);
+}
+```
+
 ## Setup
 
 ### Using CocoaPods
