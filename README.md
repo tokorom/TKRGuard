@@ -1,13 +1,13 @@
 TKRGuard [![build](https://travis-ci.org/tokorom/TKRGuard.png?branch=master)](https://travis-ci.org/tokorom/TKRGuard)
 ========
 
-The simple test helper for asynchronous processes
+The simple test helper for asynchronous processes.
 
 ## Usage
 
 All you need to use only `WAIT` and `RESUME`.
 
-```
+```objective-c
 - (void)testExample
 {
     __block NSString *response = nil;
@@ -17,7 +17,7 @@ All you need to use only `WAIT` and `RESUME`.
     }];
 
     WAIT;
-    XCTAssertEqualObjects(response, @“OK!”);
+    XCTAssertEqualObjects(response, @"OK!");
 }
 ```
 
@@ -25,7 +25,7 @@ All you need to use only `WAIT` and `RESUME`.
 
 When you want to notify a status (like a GHUnit).
 
-```
+```objective-c
 - (void)testExample
 {
     [self requestGetAsyncronous:^(id res, NSError *error) {
@@ -42,14 +42,14 @@ When you want to notify a status (like a GHUnit).
 
 When you want to change the default timeout interval.
 
-```
+```objective-c
 // default is 1.0
 [TKRGuard setDefaultTimeoutInterval:2.0];
 ```
 
 When you do not want to use the shorthand macro.
 
-```
+```objective-c
 #define UNUSE_TKRGUARD_SHORTHAND
 
 - (void)testExample
@@ -61,7 +61,7 @@ When you do not want to use the shorthand macro.
     }];
 
     [TKRGuard waitWithTimeout:1.0 forKey:@"xxx"];
-    XCTAssertEqualObjects(response, @“OK!”);
+    XCTAssertEqualObjects(response, @"OK!");
 }
 ```
 
@@ -69,7 +69,7 @@ When you do not want to use the shorthand macro.
 
 ### Using CocoaPods
 
-```
+```ruby
 // Podfile
 target :YourTestsTarget do
   pod 'TKRGuard'
@@ -78,7 +78,7 @@ end
 
 and
 
-```
+```shell
 pod install
 ```
 
@@ -88,6 +88,6 @@ Add [TKRGuard](TKRGuard) subdirectory to your project.
 
 and
 
-```
+```objective-c
 #import "TKRGuard.h"
 ```
