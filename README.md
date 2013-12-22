@@ -1,4 +1,4 @@
-TKRGuard
+TKRGuard [![build](https://travis-ci.org/tokorom/TKRGuard.png?branch=master)](https://travis-ci.org/tokorom/TKRGuard)
 ========
 
 The simple test helper for asynchronous processes
