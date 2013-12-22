@@ -12,7 +12,7 @@ build/
 # Xcode project files except for the project file
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
-xcuserdata
+!*.xcodeproj/xcshareddata
  
 # User-specific project settings
 *.mode1v3
