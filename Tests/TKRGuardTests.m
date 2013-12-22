@@ -11,7 +11,7 @@
 
 @implementation TKRGuardTests
 
-- (void)testExample
+- (void)testSimpleExample
 {
     __block id result = nil;
     [self.class asyncronousProsess:^(id res) {
@@ -20,6 +20,20 @@
     }];
 
     WAIT;
+
+    XCTAssertNotNil(result);
+    XCTAssertEqualObjects(result, @"OK");
+}
+
+- (void)testUnuseShorthand
+{
+    __block id result = nil;
+    [self.class asyncronousProsess:^(id res) {
+        result = res;
+        [TKRGuard resumeForKey:@"xxx"];
+    }];
+
+    [TKRGuard waitForKey:@"xxx"];
 
     XCTAssertNotNil(result);
     XCTAssertEqualObjects(result, @"OK");
