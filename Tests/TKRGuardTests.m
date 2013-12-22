@@ -113,12 +113,15 @@
 
 - (void)testTimeout
 {
-    __block id result = nil;
+    [TKRGuard setDefaultTimeoutInterval:0.01];
+
     [self.class asyncronousProsess:^(id res) {
-        result = res;
+        RESUME_WITH(kTKRGuardStatusSuccess);
     }];
 
     WAIT_FOR(kTKRGuardStatusTimeouted);
+
+    [TKRGuard resetDefaultTimeoutInterval];
 }
 
 //----------------------------------------------------------------------------//

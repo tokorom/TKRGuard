@@ -36,6 +36,9 @@
 + (void)resumeForKey:(id)key;
 + (void)resumeWithStatus:(TKRGuardStatus)status forKey:(id)key;
 
++ (void)setDefaultTimeoutInterval:(NSTimeInterval)timeoutInterval;
++ (void)resetDefaultTimeoutInterval;
+
 + (id)adjustedKey:(id)key;
 
 + (NSString *)guideMessageWithExpected:(TKRGuardStatus)expected got:(TKRGuardStatus)got;

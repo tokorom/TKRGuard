@@ -40,6 +40,13 @@ When you want to notify a status (like a GHUnit).
 }
 ```
 
+When you want to change the default timeout interval.
+
+```
+// default is 1.0
+[TKRGuard setDefaultTimeoutInterval:2.0];
+```
+
 When you do not want to use the shorthand macro.
 
 ```

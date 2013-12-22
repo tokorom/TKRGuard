@@ -7,11 +7,12 @@
 #import "TKRGuard.h"
 #import "TKRGuardToken.h"
 
-static NSTimeInterval kTKRGuardDefaultTimeout = 1.0;
+static NSTimeInterval kTKRGuardDefaultTimeoutInterval = 1.0;
 
 static TKRGuard *_sharedInstance = nil;
 
 @interface TKRGuard ()
+@property (assign) NSTimeInterval timeoutInterval;
 @property (strong) NSMutableDictionary *tokens;
 @end 
 
@@ -32,6 +33,7 @@ static TKRGuard *_sharedInstance = nil;
 - (id)init
 {
     if ((self = [super init])) {
+        self.timeoutInterval = kTKRGuardDefaultTimeoutInterval;
         self.tokens = [NSMutableDictionary dictionary];
     }
     return self;
@@ -43,7 +45,7 @@ static TKRGuard *_sharedInstance = nil;
     
 + (TKRGuardStatus)waitForKey:(id)key
 {
-    return [self.class waitWithTimeout:kTKRGuardDefaultTimeout forKey:key];
+    return [self.class waitWithTimeout:_sharedInstance.timeoutInterval forKey:key];
 }
 
 + (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key
@@ -59,6 +61,16 @@ static TKRGuard *_sharedInstance = nil;
 + (void)resumeWithStatus:(TKRGuardStatus)status forKey:(id)key
 {
     [_sharedInstance removeTokenForKey:key withStatus:status];
+}
+
++ (void)setDefaultTimeoutInterval:(NSTimeInterval)timeoutInterval
+{
+    _sharedInstance.timeoutInterval = timeoutInterval;
+}
+
++ (void)resetDefaultTimeoutInterval
+{
+    _sharedInstance.timeoutInterval = kTKRGuardDefaultTimeoutInterval;
 }
 
 + (id)adjustedKey:(id)key
