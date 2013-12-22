@@ -3,18 +3,16 @@
 *.swp
 *~.nib
 *.bk
-temp.plist
+Thumbs.db
  
 # Build dir
 build/
+*.build/
  
 # Xcode project files except for the project file
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 xcuserdata
- 
-# Windows image thumbnail file
-Thumbs.db
  
 # User-specific project settings
 *.mode1v3
