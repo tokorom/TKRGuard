@@ -25,7 +25,7 @@
     XCTAssertEqualObjects(result, @"OK");
 }
 
-- (void)testUnuseShorthand
+- (void)testWithoutShortHand
 {
     __block id result = nil;
     [self.class asyncronousProsess:^(id res) {
@@ -34,6 +34,34 @@
     }];
 
     [TKRGuard waitForKey:@"xxx"];
+
+    XCTAssertNotNil(result);
+    XCTAssertEqualObjects(result, @"OK");
+}
+
+- (void)testWaitWithTimeout
+{
+    __block id result = nil;
+    [self.class asyncronousProsess:^(id res) {
+        result = res;
+        RESUME;
+    }];
+
+    WAIT_MAX(1.0);
+
+    XCTAssertNotNil(result);
+    XCTAssertEqualObjects(result, @"OK");
+}
+
+- (void)testWaitWithTimeoutWithoutShortHand
+{
+    __block id result = nil;
+    [self.class asyncronousProsess:^(id res) {
+        result = res;
+        [TKRGuard resumeForKey:TKRGUARD_KEY];
+    }];
+
+    [TKRGuard waitWithTimeout:1.0 forKey:TKRGUARD_KEY];
 
     XCTAssertNotNil(result);
     XCTAssertEqualObjects(result, @"OK");
