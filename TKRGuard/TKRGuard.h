@@ -17,9 +17,11 @@
 
 #if !defined(UNUSE_TKRGUARD_SHORTHAND)
 
-#define WAIT (kTKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY]) ? \
+#define WAIT kTKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY] ? \
                         (void)nil : TKRGUARD_TIMEOUT
 #define WAIT_MAX(t) kTKRGuardStatusTimeouted != [TKRGuard waitWithTimeout:(t) forKey:TKRGUARD_KEY] ? \
+                        (void)nil : TKRGUARD_TIMEOUT
+#define WAIT_TIMES(t) kTKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY times:(t)] ? \
                         (void)nil : TKRGUARD_TIMEOUT
 #define WAIT_FOR(s) TKRAssertEqualStatus([TKRGuard waitForKey:TKRGUARD_KEY], (s))
 
@@ -35,7 +37,9 @@
 @interface TKRGuard : NSObject
 
 + (TKRGuardStatus)waitForKey:(id)key;
++ (TKRGuardStatus)waitForKey:(id)key times:(NSUInteger)times;
 + (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key;
++ (TKRGuardStatus)waitWithTimeout:(NSTimeInterval)timeout forKey:(id)key times:(NSUInteger)times;
 
 + (void)resumeForKey:(id)key;
 + (void)resumeWithStatus:(TKRGuardStatus)status forKey:(id)key;

@@ -30,6 +30,7 @@
 		069E38E818653510003698A9 /* TKRGuardToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRGuardToken.h; sourceTree = "<group>"; };
 		069E38E918653510003698A9 /* TKRGuardToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRGuardToken.m; sourceTree = "<group>"; };
 		069E38EE186535D8003698A9 /* Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
+		06F7A6F31873175F00734089 /* TKRGuardStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRGuardStatus.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +102,7 @@
 				069E38E718653510003698A9 /* TKRGuard.m */,
 				069E38E818653510003698A9 /* TKRGuardToken.h */,
 				069E38E918653510003698A9 /* TKRGuardToken.m */,
+				06F7A6F31873175F00734089 /* TKRGuardStatus.h */,
 			);
 			path = TKRGuard;
 			sourceTree = "<group>";
@@ -328,6 +330,7 @@
 				069E38E4186532D0003698A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
