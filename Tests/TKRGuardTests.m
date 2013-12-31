@@ -137,6 +137,66 @@
     XCTAssertEqualObjects(result, @"OK");
 }
 
+- (void)test2times
+{
+    __block id result1 = nil;
+    __block id result2 = nil;
+
+    [self.class asyncronousProsess:^(id res) {
+        result1 = res;
+        RESUME;
+    }];
+    [self.class asyncronousProsess:^(id res) {
+        result2 = res;
+        RESUME;
+    }];
+
+    WAIT_TIMES(2);
+
+    XCTAssertEqualObjects(result1, @"OK");
+    XCTAssertEqualObjects(result2, @"OK");
+}
+
+- (void)testDelayWait2times
+{
+    __block id result1 = nil;
+    __block id result2 = nil;
+
+    [self.class syncronousProsess:^(id res) {
+        result1 = res;
+        RESUME;
+    }];
+    [self.class syncronousProsess:^(id res) {
+        result2 = res;
+        RESUME;
+    }];
+
+    WAIT_TIMES(2);
+
+    XCTAssertEqualObjects(result1, @"OK");
+    XCTAssertEqualObjects(result2, @"OK");
+}
+
+- (void)testDelayWaitAndAsynchronous
+{
+    __block id result1 = nil;
+    __block id result2 = nil;
+
+    [self.class syncronousProsess:^(id res) {
+        result1 = res;
+        RESUME;
+    }];
+    [self.class asyncronousProsess:^(id res) {
+        result2 = res;
+        RESUME;
+    }];
+
+    WAIT_TIMES(2);
+
+    XCTAssertEqualObjects(result1, @"OK");
+    XCTAssertEqualObjects(result2, @"OK");
+}
+
 //----------------------------------------------------------------------------//
 #pragma mark - Private Methods
 //----------------------------------------------------------------------------//

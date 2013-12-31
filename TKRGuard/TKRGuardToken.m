@@ -9,7 +9,6 @@
 static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 
 @interface TKRGuardToken ()
-@property (assign) TKRGuardStatus resultStatus;
 @end 
 
 @implementation TKRGuardToken
@@ -21,6 +20,7 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 - (instancetype)init
 {
     if ((self = [super init])) {
+        self.waitCount = 1;
         self.resultStatus = kTKRGuardStatusNil;
     }
     return self;
@@ -45,16 +45,13 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 
 - (void)resumeWithStatus:(TKRGuardStatus)status
 {
+    --self.waitCount;
     self.resultStatus = status;
 }
 
-//----------------------------------------------------------------------------//
-#pragma mark - Private Methods
-//----------------------------------------------------------------------------//
-
 - (BOOL)isWaiting
 {
-    return kTKRGuardStatusNil == self.resultStatus;
+    return (kTKRGuardStatusNil == self.resultStatus) || 0 < self.waitCount;
 }
 
 @end

@@ -47,6 +47,25 @@ When you want to change the default timeout interval.
 [TKRGuard setDefaultTimeoutInterval:2.0];
 ```
 
+When you want to wait some resumes
+
+```objective-c
+    __block NSString *response1 = nil;
+    [self requestGetAsyncronous:^(id res, NSError *error) {
+        response1 = res;
+        RESUME;
+    }];
+    __block NSString *response2 = nil;
+    [self requestGetAsyncronous:^(id res, NSError *error) {
+        response2 = res;
+        RESUME;
+    }];
+
+    WAIT_TIMES(2);
+    XCTAssertEqualObjects(response1, @"1");
+    XCTAssertEqualObjects(response2, @"2");
+```
+
 When you do not want to use the shorthand macro.
 
 ```objective-c
