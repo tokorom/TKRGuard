@@ -124,6 +124,19 @@
     [TKRGuard resetDefaultTimeoutInterval];
 }
 
+- (void)testDelayWait
+{
+    __block id result = nil;
+    [self.class syncronousProsess:^(id res) {
+        result = res;
+        RESUME;
+    }];
+
+    WAIT;
+
+    XCTAssertEqualObjects(result, @"OK");
+}
+
 //----------------------------------------------------------------------------//
 #pragma mark - Private Methods
 //----------------------------------------------------------------------------//
@@ -133,6 +146,11 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         completion(@"OK");
     });
+}
+
++ (void)syncronousProsess:(void (^)(id))completion
+{
+    completion(@"OK");
 }
 
 + (void)asyncronousSuccess:(void (^)(NSError *))completion

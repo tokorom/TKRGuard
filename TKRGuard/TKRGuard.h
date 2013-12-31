@@ -28,6 +28,10 @@
 
 #endif
 
+#if !defined(NOTALLOW_TKRGUARD_DELAYWAIT)
+#define ALLOW_TKRGUARD_DELAYWAIT
+#endif
+
 @interface TKRGuard : NSObject
 
 + (TKRGuardStatus)waitForKey:(id)key;
