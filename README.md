@@ -101,6 +101,12 @@ and
 pod install
 ```
 
+and
+
+```objective-c
+#import "TKRGuard.h"
+```
+
 ### Install manually
 
 Add [TKRGuard](TKRGuard) subdirectory to your project.
