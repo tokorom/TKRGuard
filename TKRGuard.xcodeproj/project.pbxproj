@@ -14,6 +14,8 @@
 		069E38DC186532D0003698A9 /* TKRGuardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 069E38DB186532D0003698A9 /* TKRGuardTests.m */; };
 		069E38EB18653510003698A9 /* TKRGuard.m in Sources */ = {isa = PBXBuildFile; fileRef = 069E38E718653510003698A9 /* TKRGuard.m */; };
 		069E38ED18653510003698A9 /* TKRGuardToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 069E38E918653510003698A9 /* TKRGuardToken.m */; };
+		06F7A7D8187462F000734089 /* TKRGcovFluserTestObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 06F7A7D5187462F000734089 /* TKRGcovFluserTestObserver.m */; };
+		06F7A7D9187462F000734089 /* TKRGcovFlusher.m in Sources */ = {isa = PBXBuildFile; fileRef = 06F7A7D7187462F000734089 /* TKRGcovFlusher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,10 @@
 		069E38E918653510003698A9 /* TKRGuardToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRGuardToken.m; sourceTree = "<group>"; };
 		069E38EE186535D8003698A9 /* Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		06F7A6F31873175F00734089 /* TKRGuardStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRGuardStatus.h; sourceTree = "<group>"; };
+		06F7A7D4187462F000734089 /* TKRGcovFluserTestObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRGcovFluserTestObserver.h; sourceTree = "<group>"; };
+		06F7A7D5187462F000734089 /* TKRGcovFluserTestObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRGcovFluserTestObserver.m; sourceTree = "<group>"; };
+		06F7A7D6187462F000734089 /* TKRGcovFlusher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRGcovFlusher.h; sourceTree = "<group>"; };
+		06F7A7D7187462F000734089 /* TKRGcovFlusher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRGcovFlusher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				069E38DB186532D0003698A9 /* TKRGuardTests.m */,
+				06F7A7D2187462F000734089 /* Externals */,
 				069E38D6186532D0003698A9 /* Supporting Files */,
 			);
 			path = Tests;
@@ -105,6 +112,25 @@
 				06F7A6F31873175F00734089 /* TKRGuardStatus.h */,
 			);
 			path = TKRGuard;
+			sourceTree = "<group>";
+		};
+		06F7A7D2187462F000734089 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				06F7A7D3187462F000734089 /* GenerateTestCoverage */,
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		06F7A7D3187462F000734089 /* GenerateTestCoverage */ = {
+			isa = PBXGroup;
+			children = (
+				06F7A7D4187462F000734089 /* TKRGcovFluserTestObserver.h */,
+				06F7A7D5187462F000734089 /* TKRGcovFluserTestObserver.m */,
+				06F7A7D6187462F000734089 /* TKRGcovFlusher.h */,
+				06F7A7D7187462F000734089 /* TKRGcovFlusher.m */,
+			);
+			path = GenerateTestCoverage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,6 +204,8 @@
 				069E38DC186532D0003698A9 /* TKRGuardTests.m in Sources */,
 				069E38EB18653510003698A9 /* TKRGuard.m in Sources */,
 				069E38ED18653510003698A9 /* TKRGuardToken.m in Sources */,
+				06F7A7D9187462F000734089 /* TKRGcovFlusher.m in Sources */,
+				06F7A7D8187462F000734089 /* TKRGcovFluserTestObserver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +307,8 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -302,6 +332,8 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
 				INFOPLIST_FILE = "Tests/Tests-Info.plist";
