@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 tokoro. All rights reserved.
 //
 
+#import "TKRGuard.h"
+
 @interface TKRGuardTests : XCTestCase
 @end
 
@@ -195,6 +197,31 @@
 
     XCTAssertEqualObjects(result1, @"OK");
     XCTAssertEqualObjects(result2, @"OK");
+}
+
+- (void)testGuideMessage
+{
+    NSString *guide;
+    
+    guide = [TKRGuard guideMessageWithExpected:kTKRGuardStatusSuccess got:kTKRGuardStatusTimeouted];
+    XCTAssertEqualObjects(guide, @"expected: kTKRGuardStatusSuccess, got: kTKRGuardStatusTimeouted");
+
+    guide = [TKRGuard guideMessageWithExpected:kTKRGuardStatusFailure got:kTKRGuardStatusAny];
+    XCTAssertEqualObjects(guide, @"expected: kTKRGuardStatusFailure, got: kTKRGuardStatusAny");
+
+    guide = [TKRGuard guideMessageWithExpected:kTKRGuardStatusNil got:255];
+    XCTAssertEqualObjects(guide, @"expected: kTKRGuardStatusNil, got: Undefined");
+}
+
+- (void)testAdjustedKey
+{
+    NSString *key;
+
+    key = [TKRGuard adjustedKey:@"-[ViewController viewDidLoad]"];
+    XCTAssertEqualObjects(key, @"viewDidLoad");
+
+    key = [TKRGuard adjustedKey:@"-[ViewController viewDidLoad]_block_invoke_1"];
+    XCTAssertEqualObjects(key, @"viewDidLoad");
 }
 
 //----------------------------------------------------------------------------//
