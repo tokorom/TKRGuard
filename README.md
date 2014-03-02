@@ -30,13 +30,13 @@ When you want to notify a status (like a GHUnit).
 {
     [self requestGetAsyncronous:^(id res, NSError *error) {
         if (error) {
-            RESUME_WITH(kTKRGuardStatusFailure);
+            RESUME_WITH(TKRGuardStatusFailure);
         } else {
-            RESUME_WITH(kTKRGuardStatusSuccess);
+            RESUME_WITH(TKRGuardStatusSuccess);
         }
     }];
 
-    WAIT_FOR(kTKRGuardStatusSuccess);
+    WAIT_FOR(TKRGuardStatusSuccess);
 }
 ```
 

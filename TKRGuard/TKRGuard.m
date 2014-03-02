@@ -7,7 +7,7 @@
 #import "TKRGuard.h"
 #import "TKRGuardToken.h"
 
-static NSTimeInterval kTKRGuardDefaultTimeoutInterval = 1.0;
+static NSTimeInterval TKRGuardDefaultTimeoutInterval = 1.0;
 
 static TKRGuard *_sharedInstance = nil;
 
@@ -33,7 +33,7 @@ static TKRGuard *_sharedInstance = nil;
 - (id)init
 {
     if ((self = [super init])) {
-        self.timeoutInterval = kTKRGuardDefaultTimeoutInterval;
+        self.timeoutInterval = TKRGuardDefaultTimeoutInterval;
         self.tokens = [NSMutableDictionary dictionary];
     }
     return self;
@@ -65,7 +65,7 @@ static TKRGuard *_sharedInstance = nil;
 
 + (void)resumeForKey:(id)key
 {
-    [_sharedInstance removeTokenForKey:key withStatus:kTKRGuardStatusAny];
+    [_sharedInstance removeTokenForKey:key withStatus:TKRGuardStatusAny];
 }
 
 + (void)resumeWithStatus:(TKRGuardStatus)status forKey:(id)key
@@ -80,7 +80,7 @@ static TKRGuard *_sharedInstance = nil;
 
 + (void)resetDefaultTimeoutInterval
 {
-    _sharedInstance.timeoutInterval = kTKRGuardDefaultTimeoutInterval;
+    _sharedInstance.timeoutInterval = TKRGuardDefaultTimeoutInterval;
 }
 
 + (id)adjustedKey:(id)key
@@ -163,11 +163,11 @@ static TKRGuard *_sharedInstance = nil;
 + (NSString *)stringForStatus:(TKRGuardStatus)status
 {
     switch (status) {
-        case kTKRGuardStatusAny:        return @"kTKRGuardStatusAny";
-        case kTKRGuardStatusSuccess:    return @"kTKRGuardStatusSuccess";
-        case kTKRGuardStatusFailure:    return @"kTKRGuardStatusFailure";
-        case kTKRGuardStatusTimeouted:  return @"kTKRGuardStatusTimeouted";
-        case kTKRGuardStatusNil:        return @"kTKRGuardStatusNil";
+        case TKRGuardStatusAny:        return @"TKRGuardStatusAny";
+        case TKRGuardStatusSuccess:    return @"TKRGuardStatusSuccess";
+        case TKRGuardStatusFailure:    return @"TKRGuardStatusFailure";
+        case TKRGuardStatusTimeouted:  return @"TKRGuardStatusTimeouted";
+        case TKRGuardStatusNil:        return @"TKRGuardStatusNil";
         default:                        return @"Undefined";
     }
 }

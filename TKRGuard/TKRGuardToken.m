@@ -6,7 +6,7 @@
 
 #import "TKRGuardToken.h"
 
-static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
+static const NSTimeInterval TKRGuardTokenLoopInterval = 0.05;
 
 @interface TKRGuardToken ()
 @end 
@@ -21,7 +21,7 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 {
     if ((self = [super init])) {
         self.waitCount = 1;
-        self.resultStatus = kTKRGuardStatusNil;
+        self.resultStatus = TKRGuardStatusNil;
     }
     return self;
 }
@@ -35,9 +35,9 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
     NSDate *expiryDate = [NSDate dateWithTimeIntervalSinceNow:timeout];
     while (self.isWaiting) {
         if (NSOrderedDescending == [[NSDate date] compare:expiryDate]) {
-            return kTKRGuardStatusTimeouted;
+            return TKRGuardStatusTimeouted;
         }
-        NSDate *untilDate = [NSDate dateWithTimeIntervalSinceNow:kTKRGuardTokenLoopInterval];
+        NSDate *untilDate = [NSDate dateWithTimeIntervalSinceNow:TKRGuardTokenLoopInterval];
         [[NSRunLoop currentRunLoop] runUntilDate:untilDate];
     }
     return self.resultStatus;
@@ -51,7 +51,7 @@ static const NSTimeInterval kTKRGuardTokenLoopInterval = 0.05;
 
 - (BOOL)isWaiting
 {
-    return (kTKRGuardStatusNil == self.resultStatus) || 0 < self.waitCount;
+    return (TKRGuardStatusNil == self.resultStatus) || 0 < self.waitCount;
 }
 
 @end

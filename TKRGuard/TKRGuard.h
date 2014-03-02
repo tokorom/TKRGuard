@@ -17,11 +17,11 @@
 
 #if !defined(UNUSE_TKRGUARD_SHORTHAND)
 
-#define WAIT kTKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY] ? \
+#define WAIT TKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY] ? \
                         (void)nil : TKRGUARD_TIMEOUT
-#define WAIT_MAX(t) kTKRGuardStatusTimeouted != [TKRGuard waitWithTimeout:(t) forKey:TKRGUARD_KEY] ? \
+#define WAIT_MAX(t) TKRGuardStatusTimeouted != [TKRGuard waitWithTimeout:(t) forKey:TKRGUARD_KEY] ? \
                         (void)nil : TKRGUARD_TIMEOUT
-#define WAIT_TIMES(t) kTKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY times:(t)] ? \
+#define WAIT_TIMES(t) TKRGuardStatusTimeouted != [TKRGuard waitForKey:TKRGUARD_KEY times:(t)] ? \
                         (void)nil : TKRGUARD_TIMEOUT
 #define WAIT_FOR(s) TKRAssertEqualStatus([TKRGuard waitForKey:TKRGUARD_KEY], (s))
 

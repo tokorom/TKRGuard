@@ -74,13 +74,13 @@
     [self.class asyncronousSuccess:^(NSError *err) {
         error = err;
         if (err) {
-            RESUME_WITH(kTKRGuardStatusFailure);
+            RESUME_WITH(TKRGuardStatusFailure);
         } else {
-            RESUME_WITH(kTKRGuardStatusSuccess);
+            RESUME_WITH(TKRGuardStatusSuccess);
         }
     }];
 
-    WAIT_FOR(kTKRGuardStatusSuccess);
+    WAIT_FOR(TKRGuardStatusSuccess);
 }
 
 - (void)testWaitForSuccessWithoutShortHand
@@ -89,13 +89,13 @@
     [self.class asyncronousSuccess:^(NSError *err) {
         error = err;
         if (err) {
-            [TKRGuard resumeWithStatus:kTKRGuardStatusFailure forKey:TKRGUARD_KEY];
+            [TKRGuard resumeWithStatus:TKRGuardStatusFailure forKey:TKRGUARD_KEY];
         } else {
-            [TKRGuard resumeWithStatus:kTKRGuardStatusSuccess forKey:TKRGUARD_KEY];
+            [TKRGuard resumeWithStatus:TKRGuardStatusSuccess forKey:TKRGUARD_KEY];
         }
     }];
 
-    TKRAssertEqualStatus([TKRGuard waitForKey:TKRGUARD_KEY], kTKRGuardStatusSuccess);
+    TKRAssertEqualStatus([TKRGuard waitForKey:TKRGUARD_KEY], TKRGuardStatusSuccess);
 }
 
 - (void)testWaitForFailure
@@ -104,13 +104,13 @@
     [self.class asyncronousError:^(NSError *err) {
         error = err;
         if (err) {
-            RESUME_WITH(kTKRGuardStatusFailure);
+            RESUME_WITH(TKRGuardStatusFailure);
         } else {
-            RESUME_WITH(kTKRGuardStatusSuccess);
+            RESUME_WITH(TKRGuardStatusSuccess);
         }
     }];
 
-    WAIT_FOR(kTKRGuardStatusFailure);
+    WAIT_FOR(TKRGuardStatusFailure);
 }
 
 - (void)testTimeout
@@ -118,10 +118,10 @@
     [TKRGuard setDefaultTimeoutInterval:0.01];
 
     [self.class asyncronousProsess:^(id res) {
-        RESUME_WITH(kTKRGuardStatusSuccess);
+        RESUME_WITH(TKRGuardStatusSuccess);
     }];
 
-    WAIT_FOR(kTKRGuardStatusTimeouted);
+    WAIT_FOR(TKRGuardStatusTimeouted);
 
     [TKRGuard resetDefaultTimeoutInterval];
 }
@@ -203,14 +203,14 @@
 {
     NSString *guide;
     
-    guide = [TKRGuard guideMessageWithExpected:kTKRGuardStatusSuccess got:kTKRGuardStatusTimeouted];
-    XCTAssertEqualObjects(guide, @"expected: kTKRGuardStatusSuccess, got: kTKRGuardStatusTimeouted");
+    guide = [TKRGuard guideMessageWithExpected:TKRGuardStatusSuccess got:TKRGuardStatusTimeouted];
+    XCTAssertEqualObjects(guide, @"expected: TKRGuardStatusSuccess, got: TKRGuardStatusTimeouted");
 
-    guide = [TKRGuard guideMessageWithExpected:kTKRGuardStatusFailure got:kTKRGuardStatusAny];
-    XCTAssertEqualObjects(guide, @"expected: kTKRGuardStatusFailure, got: kTKRGuardStatusAny");
+    guide = [TKRGuard guideMessageWithExpected:TKRGuardStatusFailure got:TKRGuardStatusAny];
+    XCTAssertEqualObjects(guide, @"expected: TKRGuardStatusFailure, got: TKRGuardStatusAny");
 
-    guide = [TKRGuard guideMessageWithExpected:kTKRGuardStatusNil got:255];
-    XCTAssertEqualObjects(guide, @"expected: kTKRGuardStatusNil, got: Undefined");
+    guide = [TKRGuard guideMessageWithExpected:TKRGuardStatusNil got:255];
+    XCTAssertEqualObjects(guide, @"expected: TKRGuardStatusNil, got: Undefined");
 }
 
 - (void)testAdjustedKey
