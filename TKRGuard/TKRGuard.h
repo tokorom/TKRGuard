@@ -6,14 +6,29 @@
 
 #import "TKRGuardStatus.h"
 
+#ifdef TKRGUARD_USE_KIWI
+
+// For Kiwi
+#ifndef fail
+#define fail
+#endif
+#define TKRGUARD_FAILE fail
+
+#else
+
+// For XCTest
+#define TKRGUARD_FAILE XCTFail
+
+#endif
+
 #define TKRGUARD_KEY ([TKRGuard adjustedKey:[NSString stringWithFormat:@"%s", __PRETTY_FUNCTION__]])
-#define TKRGUARD_TIMEOUT XCTFail(@"TKRGuard timeouted")
+#define TKRGUARD_TIMEOUT TKRGUARD_FAILE(@"TKRGuard timeouted")
 #define TKRAssertEqualStatus(v, e) TKRGuardStatus e_ ## __LINE__ = (e); \
                                    TKRGuardStatus v_ ## __LINE__ = (v); \
                                    e_ ## __LINE__ == v_ ## __LINE__ ? \
                                    (void)nil : \
-                                   XCTFail(@"%@", [TKRGuard guideMessageWithExpected:e_ ## __LINE__  \
-                                                                                 got:v_ ## __LINE__])
+                                   TKRGUARD_FAILE(@"%@", [TKRGuard guideMessageWithExpected:e_ ## __LINE__  \
+                                                                                        got:v_ ## __LINE__])
 
 #if !defined(UNUSE_TKRGUARD_SHORTHAND)
 

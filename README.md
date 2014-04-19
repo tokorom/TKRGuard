@@ -1,4 +1,4 @@
-TKRGuard [![build](https://travis-ci.org/tokorom/TKRGuard.png?branch=master)](https://travis-ci.org/tokorom/TKRGuard) [![Coverage Status](https://coveralls.io/repos/tokorom/TKRGuard/badge.png)](https://coveralls.io/r/tokorom/TKRGuard)
+TKRGuard [![build](https://travis-ci.org/tokorom/TKRGuard.svg?branch=master)](https://travis-ci.org/tokorom/TKRGuard) [![Coverage Status](https://coveralls.io/repos/tokorom/TKRGuard/badge.png)](https://coveralls.io/r/tokorom/TKRGuard)
 ========
 
 The simple test helper for asynchronous processes.
@@ -82,6 +82,31 @@ When you do not want to use the shorthand macro.
     [TKRGuard waitWithTimeout:1.0 forKey:@"xxx"];
     XCTAssertEqualObjects(response, @"OK!");
 }
+```
+
+When you would like to use Kiwi
+
+```objective-c
+#import "Kiwi.h"
+#define TKRGUARD_USE_KIWI
+#import "TKRGuard.h"
+
+SPEC_BEGIN(KiwiTests)
+
+describe(@"Sample", ^{
+    it(@"can test asynchronous functions", ^{
+        __block id result = nil;
+        [Sample asyncronousProsess:^(id res) {
+            result = res;
+            RESUME;
+        }];
+
+        WAIT;
+        [[result should] equal:@"OK"];
+    });
+});
+
+SPEC_END
 ```
 
 ## Setup
