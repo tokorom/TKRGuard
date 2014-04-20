@@ -1,9 +1,11 @@
+PROJECT = TKRGuard.xcodeproj
 SCHEME = Tests
 SDK = iphonesimulator
 OBJDIR = "tmp"
 
 clean:
 	xctool \
+		-project $(PROJECT) \
 		-scheme $(SCHEME) \
 		-sdk $(SDK) \
 		clean \
@@ -11,6 +13,7 @@ clean:
 
 test:
 	xctool \
+		-project $(PROJECT) \
 		-scheme $(SCHEME) \
 		-sdk $(SDK) \
 		test \
@@ -18,6 +21,7 @@ test:
 
 test-with-coverage:
 	xctool \
+		-project $(PROJECT) \
 		-scheme $(SCHEME) \
 		-sdk $(SDK) \
 		OBJROOT=$(OBJDIR) \
