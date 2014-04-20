@@ -1,6 +1,8 @@
 language: objective-c
 
 before_install:
+  - brew update
+  - brew upgrade xctool
   - sudo easy_install cpp-coveralls
 script:
   - make clean test-with-coverage
