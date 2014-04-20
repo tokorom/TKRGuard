@@ -1,22 +1,30 @@
 SCHEME = Tests
-DESTINATION = "name=iPhone Retina (4-inch 64-bit),OS=7.0"
+SDK = iphonesimulator
 OBJDIR = "tmp"
 
 clean:
-	xcodebuild clean
+	xctool \
+		-scheme $(SCHEME) \
+		-sdk $(SDK) \
+		clean \
+		$(SUFFIX)
 
 test:
-	xcodebuild test \
+	xctool \
 		-scheme $(SCHEME) \
-		-destination $(DESTINATION)
+		-sdk $(SDK) \
+		test \
+		$(SUFFIX)
 
 test-with-coverage:
-	xcodebuild test \
+	xctool \
 		-scheme $(SCHEME) \
-		-destination $(DESTINATION) \
+		-sdk $(SDK) \
 		OBJROOT=$(OBJDIR) \
 		GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES \
-		GCC_GENERATE_TEST_COVERAGE_FILES=YES
+		GCC_GENERATE_TEST_COVERAGE_FILES=YES \
+		test \
+		$(SUFFIX)
 
 coverstory:
 	make test-with-coverage

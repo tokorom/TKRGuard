@@ -3,27 +3,33 @@
 
 require 'guard/plugin'
 
-SCHEME = 'Tests'
-SUFFIX = '2>&1 | xcpretty -c'
-
 module ::Guard
   class InlineGuard < ::Guard::Plugin
+    TEST_TARGET = 'Tests'
 
-    def command
-      "xctest-runner -scheme #{SCHEME} #{@only} #{SUFFIX}"
+    def clean
+      system('make clean')
+    end
+
+    def test(suffix='')
+      system("make test #{suffix}")
     end
 
     def run_all
-      system(command)
+      clean
+      test
     end
 
     def run_on_changes(paths)
       test_class = File.basename(paths[0], '.*')
       test_case = nil
-      if !test_class.empty?
-        @only = "-test #{test_class}" + (test_case ? "/#{test_case}" : '')
+      unless test_class.empty?
+        test_case = (test_case ? "/#{test_case}" : '')
+        only = "SUFFIX=\"-only #{TEST_TARGET}:#{test_class}#{test_case}\""  
+        test(only)
+      else
+        test
       end
-      system(command)
     end
   end
 end
